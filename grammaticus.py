@@ -18,11 +18,11 @@ class Grammaticus:
                     word = word[1:]
                 while word[-1] in Grammaticus.punctuation_marks:
                     word = word[:-1]
+                if word[-3:] == 'que' and word != 'quoque':
+                    self.vocabulary['-que'] = self.vocabulary['-que'] + 1 if '-que' in self.vocabulary else 1
+                    word = word[:-3]
                 self.word_count += 1
-                if word in self.vocabulary:
-                    self.vocabulary[word] += 1
-                else:
-                    self.vocabulary[word] = 1
+                self.vocabulary[word] = self.vocabulary[word] + 1 if word in self.vocabulary else 1
         duration = time.time() - initial_time
         message = 'Sorted {0} words in {1:.2g} seconds ({2:.2g} milliseconds/word).'
         print(message.format(self.word_count, duration, duration/self.word_count*1000))
